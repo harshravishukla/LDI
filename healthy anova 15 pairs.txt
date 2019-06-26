@@ -1,0 +1,43 @@
+> data1 <- read.csv(file.choose(),header=TRUE)
+> data1 <- read.csv(file.choose(),header=TRUE)
+> scenario <- c(rep('No Soil',15), rep('Soil 9 inch',15),rep('Soil 15 inch',15), rep('Soil 15 inch Compacted',15))
+> weight<-c(data1$No.Soil, data1$Soil.9.inch, data1$Soil.15.inch, data1$Soil.15inch.Compacted)
+> df<- data.frame(scenario,weight)
+> healthyanova=aov(weight~scenario)
+> summary(healthyanova)
+            Df Sum Sq Mean Sq F value Pr(>F)    
+scenario     3  45.83  15.276   54.38 <2e-16 ***
+Residuals   56  15.73   0.281                   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+> HealthyLSD = LSD.test(healthyanova, "scenario")
+> HealthyLSD
+$statistics
+      Mean       CV   MSerror       LSD
+  3.947525 13.42606 0.2808971 0.3876825
+
+$parameters
+  Df ntr  t.value alpha       test   name.t
+  56   4 2.003241  0.05 Fisher-LSD scenario
+
+$means
+                         weight       std  r      LCL      UCL      Min
+No Soil                3.462177 0.2684480 15 3.188044 3.736310 2.882492
+Soil 15 inch           3.908695 0.2939928 15 3.634562 4.182828 3.515279
+Soil 15 inch Compacted 5.367380 0.8646612 15 5.093247 5.641512 4.019209
+Soil 9 inch            3.051850 0.4663189 15 2.777717 3.325982 2.047024
+                            Max
+No Soil                3.949628
+Soil 15 inch           4.538338
+Soil 15 inch Compacted 7.160653
+Soil 9 inch            3.901282
+
+$comparison
+NULL
+
+$groups
+                     trt    means M
+1 Soil 15 inch Compacted 5.367380 a
+2 Soil 15 inch           3.908695 b
+3 No Soil                3.462177 c
+4 Soil 9 inch            3.051850 d
